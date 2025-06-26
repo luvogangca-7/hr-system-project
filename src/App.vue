@@ -1,13 +1,13 @@
 <template>
-  <header>
-    <div class="header-cont">
+  <header v-if="hideDash">
+    <div class="header-cont" >
        <h1 class="logo">ModernTech Solutions</h1>
        <button class="butn">Logout</button>
     </div>
   </header>
   <div id="app-layout">
 
-    <navbar-comp/>
+    <navbar-comp :hide-dash="hideDash"/>
     
     <main class="main-content">
       <router-view/>
@@ -20,6 +20,11 @@ import NavbarComp from './components/NavbarComp.vue';
 export default {
   components: {
     NavbarComp
+  },
+  computed: {
+    hideDash(){
+      return this.$route.path !== '/'
+    }
   }
 }
 
