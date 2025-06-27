@@ -1,32 +1,52 @@
 <template>
- <h1>Employees</h1>
+  <div class="page-wrapper">
+      <div class="heading">
+     <h1>Employees</h1>
 
  <p>Managing your employees has never been easier.</p>
 
- <h3>Add new employee</h3>
 
-<employee-form
+  </div>
+
+
+ <div class="main-page">
+
+ <input
+  v-model="search"
+  type="text"
+  placeholder="Search employee by name, position, or department"
+  class="search-input"
+/>
+
+
+   <button class="addBtn" @click="showAdd()">{{ addEmp ? 'Hide' : 'Add employee'}}</button>
+
+  <div class="main-page" v-if="this.addEmp">
+
+   <h3>Add new employee</h3>
+
+  <employee-form
   :employee="editingEmployee"
   @add-employee="addEmployee"
   @update-employee="updateEmployee"
 />
 
+ </div>
+
+ 
  <employee-comp
-  :employees="employees"
+  :employees="filteredEmployees"
   @edit-employee="editEmployee"
   @delete-employee="deleteEmployee"
 />
 
- 
+ </div>
 
- <!-- <div class="container">
-  <input type="text" name="Name" placeholder="Add new employee name...">
-  <input type="text" name="Name" placeholder="Add employee's position...">
-  <input type="text" name="Name" placeholder="Add department...">
-  <input type="number" name="Name" placeholder="Add salary...">
-  <input type="text" name="Name" placeholder="Add history...">
-  <input type="text" name="Name" placeholder="Add email...">
- </div> -->
+  </div>
+
+
+
+ 
  
 </template>
 <script>
@@ -37,11 +57,24 @@ export default{
    data() {
     return {
       employees: [],
-      editingEmployee: null
+      editingEmployee: null,
+      addEmp: false,
+      search: ''
     }
   },
   async mounted() {
     await this.fetchEmployees();
+  },
+  computed: {
+    filteredEmployees() {
+      if (!this.search) return this.employees;
+      const q = this.search.toLowerCase();
+      return this.employees.filter(emp =>
+        emp.name.toLowerCase().includes(q) ||
+        emp.position.toLowerCase().includes(q) ||
+        emp.department.toLowerCase().includes(q)
+      );
+    }
   },
   methods: {
     async fetchEmployees() {
@@ -77,6 +110,7 @@ export default{
   editEmployee(employee) {
   // Set the employee to be edited
   this.editingEmployee = { ...employee };
+  this.addEmp = true;
 },
 updateEmployee(updatedEmployee) {
   const idx = this.employees.findIndex(e => e.id === updatedEmployee.id);
@@ -84,6 +118,10 @@ updateEmployee(updatedEmployee) {
     this.employees.splice(idx, 1, updatedEmployee);
   }
   this.editingEmployee = null;
+  this.showAdd()
+},
+showAdd(){
+    this.addEmp = !this.addEmp;
 }
 },
 
@@ -95,10 +133,6 @@ updateEmployee(updatedEmployee) {
 }
 </script>
 <style>
-
-h1 {
-  font-weight: 700;
-}
 
 h3 {
   padding: 20px 0;
@@ -123,6 +157,24 @@ td {
 
 td, th {
   border-left-color: gray;
+}
+
+.addBtn {
+  background-color: #af2727;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.search-input {
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 </style>

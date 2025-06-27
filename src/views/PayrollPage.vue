@@ -1,14 +1,27 @@
 <template>
+  <div class="page-wrapper">
+    <h1>Payroll</h1>
+    <p>Pay your employees seamlessly.</p>
 
-  <h1>Payroll</h1>
-  <p>Pay your employees seamlessly.</p>
-  <PayrollComp
-  :records="payrollList"
-  @edit="openEditModal"
-  @delete="deleteRecord"
-  @generate="generatePayslip"
-/>
+    <div class="main-page">
+      <input
+        v-model="search"
+        type="text"
+        placeholder="Search employee by name or ID"
+        class="search-input"
+        style="margin-bottom: 18px; padding: 8px 12px; width: 100%; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;"
+      />
+
+      <PayrollComp
+        :records="filteredPayroll"
+        @edit="openEditModal"
+        @delete="deleteRecord"
+        @generate="generatePayslip"
+      />
+    </div>
+  </div>
 </template>
+
 <script>
 import { jsPDF } from "jspdf";
 import PayrollComp from "@/components/PayrollComp.vue";
@@ -21,7 +34,18 @@ export default {
     return {
       payrollList: [],
       editForm: { id: null, name: "", hoursWorked: 0, leaveDeductions: 0, salary: 0 },
+      search: ""
     };
+  },
+  computed: {
+    filteredPayroll() {
+      if (!this.search) return this.payrollList;
+      const q = this.search.toLowerCase();
+      return this.payrollList.filter(emp =>
+        emp.name.toLowerCase().includes(q) ||
+        String(emp.id).includes(q)
+      );
+    }
   },
   async mounted() {
     try {

@@ -1,5 +1,5 @@
 <template>
-<div class="table-container">
+<div class="table-container table-responsive">
   <table class="table table-striped-columns">
     <thead>
       <tr>
@@ -18,11 +18,13 @@
       <td>{{ employee.name }}</td>
       <td>{{ employee.position }}</td>
       <td>{{ employee.department }}</td>
-      <td>R {{ employee.salary }}</td>
+      <td>R{{ employee.salary }}</td>
       <td>{{ employee.history }}</td>
       <td>{{ employee.contact }}</td>
-      <td><button class="edit" @click="$emit('edit-employee', employee)">Edit</button></td>
-      <td><button class="delete" @click="$emit('delete-employee', employee)">Delete</button></td>
+      <td>
+        <button class="btn btn-primary" @click="$emit('edit-employee', employee)">Edit</button>
+      </td>
+      <td><button class="btn btn-danger" @click="$emit('delete-employee', employee)">Delete</button></td>
     </tr>
     </tbody>
     
@@ -48,11 +50,5 @@ export default {
     
   }
 
-  .edit{
-    background-color: rgb(53, 76, 207);
-  }
 
-  .delete {
-    background-color: rgb(217, 22, 22);
-  }
 </style>

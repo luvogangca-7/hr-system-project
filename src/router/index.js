@@ -4,6 +4,7 @@ import AttendancePage from '@/views/AttendancePage.vue'
 import LeavePage from '@/views/LeavePage.vue'
 import PayrollPage from '@/views/PayrollPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
+import PerformanceReview from '@/views/Performance Review.vue'
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     path: '/',
     name: 'login',
     component: LoginPage
+  },
+  {
+    path: '/performance',
+    name: 'performanceReview',
+    component: PerformanceReview
   }
 ]
 

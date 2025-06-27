@@ -7,7 +7,7 @@
     <input v-model.number="employeeData.salary" placeholder="Salary" type="number" required class="form-control mb-2" />
     <input v-model="employeeData.history" placeholder="Employment History" class="form-control mb-2" />
     <input v-model="employeeData.contact" placeholder="Email Address" type="email" required class="form-control mb-2" />
-    <button type="submit" class="btn btn-primary" id="sub">{{ employee && employee.id ? 'Update Employee' : 'Add Employee' }}</button>
+    <button type="submit" class="addBtn" id="sub">{{ employee && employee.id ? 'Update Employee' : 'Submit' }}</button>
   </form>
     </div>
   

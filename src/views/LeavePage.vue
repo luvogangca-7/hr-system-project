@@ -1,13 +1,15 @@
 <template>
-  <div class="leave-page">
-    <h2>Current Leave Requests</h2>
+  <div class="page-wrapper">
+    <h1>Leave Requests</h1>
+    <p>Handle all your employees' leave requests with just a click.</p>
+  <div class="main-page">
     <input
       v-model="search"
       type="text"
-      placeholder="Search by name or reason"
+      placeholder="Search employee by name or reason"
       class="search-input"
     />
-    <table v-if="filteredLeaveRequests.length">
+    <table class="table table-striped-columns table-responsive"v-if="filteredLeaveRequests.length">
       <thead>
         <tr>
           <th>Name</th>
@@ -28,13 +30,16 @@
             <span v-else style="color:red">Denied</span>
           </td>
           <td v-if="isHR">
-            <button v-if="req.status === 'Pending' || req.status === 'pending'" @click="approve(idx)">Approve</button>
-            <button v-if="req.status === 'Pending' || req.status === 'pending'" @click="deny(idx)">Deny</button>
+            <div class="btn-cont">
+            <button v-if="req.status === 'Pending' || req.status === 'pending'" @click="approve(idx)" class="btn btn-primary mx-2">Approve</button>
+            <button v-if="req.status === 'Pending' || req.status === 'pending'" @click="deny(idx)" class="btn btn-danger mx-2">Deny</button>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
     <p v-else>No leave requests yet.</p>
+  </div>
   </div>
 </template>
 
@@ -102,16 +107,9 @@ export default {
 }
 </script>
 
-<style>
-.leave-page {
-  max-width: 700px;
-  margin: 40px auto;
-  background: #f9f9f9;
-  padding: 32px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px #0001;
-}
-.leave-page h2 {
+<style scoped>
+
+.main-page h2 {
   margin-bottom: 16px;
 }
 .search-input {
@@ -122,28 +120,21 @@ export default {
   border: 1px solid #ccc;
   font-size: 16px;
 }
-.leave-page table {
+/* .main-page table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 8px;
 }
-.leave-page th, .leave-page td {
+.main-page th, .main-page td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
-}
-.leave-page button {
-  width: fit-content;
-  padding: 8px 18px;
-  border-radius: 5px;
-  border: none;
-  background: #42b983;
-  color: #fff;
-  font-weight: bold;
+} */
+.main-page button {
   cursor: pointer;
-  margin-right: 8px;
 }
-.leave-page button:hover {
-  background: #2c8c6d;
+.btn-cont {
+  display: flex;
+  justify-content: center;
 }
 </style>

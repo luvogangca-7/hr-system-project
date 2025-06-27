@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-bordered table-striped-columns">
+  <table class="table table-striped-columns table-responsive">
     <thead class="table-light">
       <tr>
         <th>Employee ID</th>
@@ -19,11 +19,11 @@
         <td>{{ employee.leaveDeductions }}</td>
         <td>R{{ employee.salary }}</td>
         <td>
-          <button class="btn btn-secondary btn-sm me-2" @click="$emit('edit', employee)">Edit</button>
-          <button class="btn btn-danger btn-sm" @click="$emit('delete', employee.id)">Delete</button>
+          <button class="btn btn-primary mx-2" @click="$emit('edit', employee)">Edit</button>
+          <button class="btn btn-danger mx-2" @click="$emit('delete', employee.id)">Delete</button>
         </td>
         <td>
-          <button class="btn btn-secondary btn-sm" @click="$emit('generate', employee)">Payslip</button>
+          <button class="btn btn-secondary" @click="$emit('generate', employee)">Payslip</button>
         </td>
       </tr>
     </tbody>

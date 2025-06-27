@@ -1,86 +1,123 @@
 <template>
-<div class="login-wrapper">
-    <div class="loginForm">
-        <h2>Please Login</h2>
-        <form>
-            <label for="name">Username</label>
-            <input v-model="name" placeholder="Enter Username" required>
-            <br>
-            <label for="name">Password</label>
-            <input v-model="password" placeholder="password" required>
-            <br>
-            <button @click="login">Sign In</button>
-            <br><br><br>
-            <button>Remember Me</button>  
-            <p v-if="error">{{ error }}</p>
-        </form>
+  <div class="login-wrapper">
+    <div class="login-box">
+      <h2>Welcome Back</h2>
+      <form @submit.prevent="login">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input class="input" id="username" v-model="username" type="text" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="input" id="password" v-model="password" type="password" required />
+        </div>
+        <button class="submit" type="submit">Login</button>
+      </form>
     </div>
- </div>
+  </div>
 </template>
-
 <script>
-export default{
-    data(){
-        return {
-            name: '',
-            password: '',
-            error: ''
+export default {
+  name: "Login",
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    login() {
+        if(this.username === "admin" && this.password === "1234") {
+            this.error ='',
+            this.$router.push('/dashboard')
+        }else{
+            this.error = 'invalid username or password'
         }
     },
-    methods: {
-        login(){
-            if(this.name === 'LikhonaBenayo'&& this.password ==='hr_project') {
-                this.error = '',
-                this.$router.push('/dashboard');
-            } else {
-                this.error = 'invalid username or password'
-            }
-        }
-    }
-}
+  },
+};
 </script>
-
 <style>
+.footer-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  z-index: 100;
+}
 .login-wrapper {
+  height: 100vh;
+  background-image: url('../assets/mts-logo.jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; 
-  /* Add your logo as a background image */
-  background: url('@/assets/mts-logo.jpg') no-repeat center center fixed;
-  background-size: 400px 400px;
-  /* fallback color */
-  background-color: aquamarine;
 }
-
-.loginForm{
-    background-color: palevioletred;
-    width: 400px;
-    height: 280px;
-    align-items: center;
-    z-index: 1;
-    opacity: 0.97;
+.login-box {
+  position: relative;
+  top: -100px;
+  background: rgba(255, 255, 255, 0.2); /* Transparent white */
+  backdrop-filter: blur(10px); /* Glass effect */
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  color: #fff;
+  animation: appear 2s 0.2s ease forwards;
+  opacity: 0;
 }
-
-:root{
-    background-color: aquamarine;
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
-
-.loginForm button:nth-of-type(2) {
-  background-color: #fff;
-  color: #13599f;
-  border: 2px solid #1a4b7d;
-  border-radius: 5px;
-  padding: 8px 24px;
-  font-size: 16px;
+.form-group {
+  margin-bottom: 15px;
+}
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+}
+.input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+.submit {
+  width: 100%;
+  padding: 10px;
+  background-color: #ffffffaa;
+  border: none;
+  border-radius: 8px;
+  color: #000;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s, color 0.2s;
+}
+.submit:hover {
+  background-color: #ffffffcc;
 }
 
-.loginForm button:nth-of-type(2):hover {
-  background-color: #1e90ff;
-  color: #fff;
+.main-content {
+  padding: 0;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(100px);
+  }
+  
 }
 </style>

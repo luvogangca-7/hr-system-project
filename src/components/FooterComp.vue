@@ -7,5 +7,13 @@
 </template>
 
 <style>
-    
+    footer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20vh;
+        background-color: rgb(126, 126, 126);
+        color: white;
+    }
+
 </style>

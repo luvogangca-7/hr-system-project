@@ -6,6 +6,7 @@
         <router-link to="/attendance">Attendance</router-link>
         <router-link to="/payroll">Payroll</router-link>
         <router-link to="/leave">Leave</router-link>
+        <router-link to="/performance">Performance Review</router-link>
       </nav>
     </aside>
 </template>
