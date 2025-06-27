@@ -1,12 +1,27 @@
 <template>
   <header v-if="hideDash">
     <div class="header-cont">
+      <!-- Hamburger icon on the left -->
+      <button
+        class="hamburger"
+        @click="toggleSidebar"
+        v-show="isMobile"
+        aria-label="Toggle sidebar"
+      >
+        <i class="bi bi-list"></i>
+      </button>
       <h1 class="logo">ModernTech Solutions</h1>
+      <!-- Logout button always visible -->
       <button class="butn" @click="showLogoutModal">Logout</button>
     </div>
   </header>
   <div id="app-layout">
-    <navbar-comp :hide-dash="hideDash"/>
+    <!-- Sidebar: show on desktop or if toggled on mobile -->
+    <navbar-comp
+      :hide-dash="hideDash"
+      v-show="!isMobile || sidebarOpen"
+      class="sidebar"
+    />
     <main class="main-content">
       <!-- Bootstrap Modal -->
       <div class="modal fade" ref="logoutModal" tabindex="-1">
@@ -28,10 +43,10 @@
       </div>
       <router-view/>
     </main>
-    
   </div>
   <footer-comp/>
 </template>
+
 <script>
 import FooterComp from './components/FooterComp.vue';
 import NavbarComp from './components/NavbarComp.vue';
@@ -39,10 +54,23 @@ import * as bootstrap from 'bootstrap';
 
 export default {
   components: { NavbarComp, FooterComp },
+  data() {
+    return {
+      sidebarOpen: false,
+      isMobile: false
+    }
+  },
   computed: {
     hideDash() {
       return this.$route.path !== '/';
     }
+  },
+  mounted() {
+    this.checkMobile();
+    window.addEventListener('resize', this.checkMobile);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkMobile);
   },
   methods: {
     showLogoutModal() {
@@ -51,14 +79,19 @@ export default {
     },
     logOut() {
       this.$router.push('/');
-      // hide the modal after pressing yes
       const modal = bootstrap.Modal.getInstance(this.$refs.logoutModal);
       modal.hide();
+    },
+    toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen;
+    },
+    checkMobile() {
+      this.isMobile = window.innerWidth < 753;
+      if (!this.isMobile) this.sidebarOpen = false;
     }
   }
 }
 </script>
-
 
 <style>
 #app-layout {
@@ -77,13 +110,24 @@ header {
 .header-cont {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 0 20px;
 }
 
+.hamburger {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  display: none;
+  cursor: pointer;
+  margin-right: 18px;
+}
+
 .logo {
   color: white;
+  margin-right: auto;
 }
 
 .butn {
@@ -92,6 +136,7 @@ header {
   padding: 8px;
   border: none;
   border-radius: 6px;
+  margin-left: auto;
 }
 
 .sidebar {
@@ -145,15 +190,93 @@ h1 {
 }
 
 .main-page {
-  /* max-width: 700px; */
   margin: 10px auto;
   background: #f9f9f9;
   padding: 32px;
   border-radius: 10px;
   box-shadow: 0 2px 8px #0001;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* Tablet screens */
+@media (max-width: 900px) {
+  .main-page {
+    padding: 18px;
+    max-width: 100%;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 600px) {
+  .main-page {
+    padding: 8px 2px;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+  }
 }
 
 .page-wrapper {
   padding: 20px;
+}
+
+@media (max-width: 768px) {
+  header {
+    height: 60px;
+  }
+  .header-cont {
+    padding: 0 8px;
+  }
+  .logo {
+    font-size: 1.1rem;
+  }
+  .butn {
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+}
+
+footer {
+  background: #af2727;
+  color: #fff;
+  text-align: center;
+  padding: 20px 40px;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding: 12px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    padding: 8px 4px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Hamburger icon styles */
+@media (max-width: 752px) {
+  .hamburger {
+    display: block;
+  }
+  /* Remove this so logout button is always visible */
+  /* .butn {
+    display: none;
+  } */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px; /* match header height on mobile */
+    height: calc(100% - 60px);
+    z-index: 1001;
+    background: #2c3e50;
+    width: 220px;
+    transition: transform 0.3s;
+  }
 }
 </style>

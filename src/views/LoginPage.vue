@@ -27,10 +27,13 @@ export default {
   },
   methods: {
     login() {
+        // Simple authentication logic: checks hardcoded credentials
         if(this.username === "admin" && this.password === "1234") {
             this.error ='',
+            // If credentials are correct, navigate to dashboard
             this.$router.push('/dashboard')
         }else{
+            // Otherwise, show error message
             this.error = 'invalid username or password'
         }
     },
@@ -70,6 +73,7 @@ export default {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   width: 300px;
   color: #fff;
+  /* Animation for login box appearance */
   animation: appear 2s 0.2s ease forwards;
   opacity: 0;
 }
@@ -110,6 +114,7 @@ label {
   padding: 0;
 }
 
+/* Keyframes for login box animation */
 @keyframes appear {
   0% {
     opacity: 0.1;

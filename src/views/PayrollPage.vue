@@ -9,7 +9,7 @@
         type="text"
         placeholder="Search employee by name or ID"
         class="search-input"
-        style="margin-bottom: 18px; padding: 8px 12px; width: 100%; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;"
+        style="margin-bottom: 18px; padding: 8px 12px; width: 75%; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;"
       />
 
       <PayrollComp
@@ -121,3 +121,31 @@ export default {
   }
 };
 </script>
+<style>
+.search-input {
+  display: flex;
+  min-width: 200px;
+  max-width: 100%;
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  width: 75%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: width 0.2s;
+}
+
+@media (max-width: 900px) {
+  .search-input {
+    width: 60%;
+  }
+}
+
+@media (max-width: 600px) {
+  .search-input {
+    width: 100%;
+    min-width: 200px;
+  }
+}
+</style>

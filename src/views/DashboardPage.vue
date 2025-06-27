@@ -30,17 +30,6 @@
           <h3>Departments Overview</h3>
           <department-bar-chart :departments="departments" />
         </div>
-        <!-- <div class="box2">
-          <h3>Clock-in Status</h3>
-          <div>
-            <div class="opt" v-for="(emp, idx) in clockStatus" :key="idx">
-              <p>{{ emp.name }}</p>
-              <p :style="{color: emp.status === 'Present' ? 'green' : 'red'}">
-                {{ emp.status === 'Present' ? 'Clocked in' : "Hasn't clocked in yet" }}
-              </p>
-            </div>
-          </div>
-        </div> -->
         <div class="box2">
           <h4>Top 3 Performing Employees This Week</h4>
           <div v-for="(emp, idx) in topPerformers" :key="idx" class="opt">
