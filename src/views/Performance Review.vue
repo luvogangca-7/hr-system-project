@@ -159,5 +159,6 @@ table {
   padding: 8px;
   border: none;
   border-radius: 6px;
+  width: fit-content;
 }
 </style>

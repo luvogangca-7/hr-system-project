@@ -166,6 +166,7 @@ td, th {
   border: none;
   border-radius: 6px;
   margin-bottom: 8px;
+  width: fit-content;
 }
 
 .search-input {

@@ -12,16 +12,21 @@
       </button>
       <h1 class="logo">ModernTech Solutions</h1>
       <!-- Logout button always visible -->
-      <button class="butn" @click="showLogoutModal">Logout</button>
+      <button class="butn logout-desktop" @click="showLogoutModal">Logout</button>
     </div>
   </header>
   <div id="app-layout">
     <!-- Sidebar: show on desktop or if toggled on mobile -->
     <navbar-comp
       :hide-dash="hideDash"
-      v-show="!isMobile || sidebarOpen"
+      v-if="!isMobile || sidebarOpen"
       class="sidebar"
-    />
+      @click="toggleSidebar"
+    >
+      <template #after-nav>
+        <button class="butn logout-mobile" @click="showLogoutModal">Logout</button>
+      </template>
+    </navbar-comp>
     <main class="main-content">
       <!-- Bootstrap Modal -->
       <div class="modal fade" ref="logoutModal" tabindex="-1">
@@ -94,17 +99,29 @@ export default {
 </script>
 
 <style>
-#app-layout {
-  display: flex;
-  min-height: 100vh;
+* {
+  box-sizing: border-box;
 }
-
 header {
   display: flex;
   align-items: center;
   height: 80px;
   background-color: #af2727;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  min-width: 100vw;
+  left: 0;
+  top: 0;
+  position: fixed;
+  z-index: 1002;
+  overflow-x: hidden;
+  right: 0;
+}
+
+#app-layout {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 80px;
 }
 
 .header-cont {
@@ -189,7 +206,10 @@ h1 {
   background: #f7f7f7;
 }
 
+/* Base styles (desktop first) */
 .main-page {
+  display: flex;
+  flex-direction: column;
   margin: 10px auto;
   background: #f9f9f9;
   padding: 32px;
@@ -199,59 +219,73 @@ h1 {
   width: 100%;
 }
 
-/* Tablet screens */
+  .butn.logout-mobile{
+    display: none;
+  }
+
+  .page-wrapper {
+    padding: 20px;
+  }
+
+/* 1200px and below */
+@media (max-width: 1200px) {
+  header {
+    width: 100vw;
+  }
+
+
+}
+
+/* 900px and below (tablet) */
 @media (max-width: 900px) {
   .main-page {
     padding: 18px;
     max-width: 100%;
   }
-}
-
-/* Mobile screens */
-@media (max-width: 600px) {
-  .main-page {
-    padding: 8px 2px;
-    border-radius: 0;
-    margin: 0;
-    box-shadow: none;
+  .search-input {
+    width: 60%;
   }
 }
 
-.page-wrapper {
-  padding: 20px;
-}
-
+/* 768px and below (small tablet) */
 @media (max-width: 768px) {
   header {
     height: 60px;
+    width: 100vw;
   }
-  .header-cont {
-    padding: 0 8px;
+  #app-layout {
+    padding-top: 60px;
   }
-  .logo {
-    font-size: 1.1rem;
-  }
-  .butn {
-    padding: 6px;
-    font-size: 0.9rem;
-  }
-}
-
-footer {
-  background: #af2727;
-  color: #fff;
-  text-align: center;
-  padding: 20px 40px;
-  font-size: 1rem;
-}
-
-@media (max-width: 768px) {
   footer {
     padding: 12px 10px;
     font-size: 0.9rem;
   }
 }
 
+/* 600px and below (mobile) */
+@media (max-width: 600px) {
+  .main-page {
+    padding: 8px 2px;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .search-input {
+    width: 100%;
+    min-width: 200px;
+  }
+  .butn.logout-desktop {
+    display: none;
+  }
+  .butn.logout-mobile {
+    display: block;
+    width: 90%;
+    margin: 20px auto 0 auto;
+    background-color: #af2727;
+  }
+}
+
+/* 480px and below (small mobile) */
 @media (max-width: 480px) {
   footer {
     padding: 8px 4px;
@@ -259,19 +293,15 @@ footer {
   }
 }
 
-/* Hamburger icon styles */
+/* Hamburger icon and sidebar for mobile */
 @media (max-width: 752px) {
   .hamburger {
     display: block;
   }
-  /* Remove this so logout button is always visible */
-  /* .butn {
-    display: none;
-  } */
   .sidebar {
     position: fixed;
     left: 0;
-    top: 60px; /* match header height on mobile */
+    top: 60px;
     height: calc(100% - 60px);
     z-index: 1001;
     background: #2c3e50;

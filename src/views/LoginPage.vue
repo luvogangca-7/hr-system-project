@@ -55,13 +55,21 @@ export default {
   z-index: 100;
 }
 .login-wrapper {
-  height: 100vh;
-  background-image: url('../assets/mts-logo.jpg'); /* Replace with your image path */
+  min-height: 100vh;
+  width: 100vw;
+  background-image: url('../assets/mts-logo.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 .login-box {
   position: relative;

@@ -26,11 +26,11 @@
         </div>
       </div>
       <div class="container2">
-        <div class="box2">
+        <div class="box2" @click="$router.push('/performance')" style="cursor:pointer;">
           <h3>Departments Overview</h3>
           <department-bar-chart :departments="departments" />
         </div>
-        <div class="box2">
+        <div class="box2" @click="$router.push('/performance')" style="cursor:pointer;">
           <h4>Top 3 Performing Employees This Week</h4>
           <div v-for="(emp, idx) in topPerformers" :key="idx" class="opt">
             <div>
@@ -105,7 +105,7 @@ export default {
   transition: transform 0.2s, box-shadow 0.2s;
   padding: 20px 0 10px 0; /* Add vertical padding for better spacing */
 }
-.box:hover {
+.box:hover, .box2:hover {
   transform: scale(1.04);
   box-shadow: 0 4px 24px #af272733;
   background: #f7f7f7;
@@ -156,6 +156,7 @@ export default {
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.13);
   padding: 20px;
   background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .opt {

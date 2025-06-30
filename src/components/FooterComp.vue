@@ -12,7 +12,7 @@
         justify-content: center;
         align-items: center;
         height: 20vh;
-        background-color: rgb(126, 126, 126);
+        background-color: #af2727;
         color: white;
     }
 

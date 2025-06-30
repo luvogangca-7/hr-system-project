@@ -18,6 +18,37 @@
         @delete="deleteRecord"
         @generate="generatePayslip"
       />
+
+      <div class="modal fade" ref="editModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form @submit.prevent="saveEdit">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Payroll</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-2">
+                  <label class="form-label">Employee Name</label>
+                  <input v-model="editForm.name" class="form-control" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Hours Worked</label>
+                  <input v-model.number="editForm.hoursWorked" type="number" class="form-control" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Leave Deductions</label>
+                  <input v-model.number="editForm.leaveDeductions" type="number" class="form-control" required />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -93,12 +124,19 @@ export default {
       modal.show();
     },
     saveEdit() {
+      // Example rates, adjust as needed
+      const hourlyRate = 500;
+      const deductionRate = 200;
+
+      // Calculate salary
+      this.editForm.salary =
+        (this.editForm.hoursWorked * hourlyRate) -
+        (this.editForm.leaveDeductions * deductionRate);
+
       const index = this.payrollList.findIndex((e) => e.id === this.editForm.id);
       if (index !== -1) {
-        // Edit existing
         this.payrollList.splice(index, 1, { ...this.editForm });
       } else {
-        // Add new
         this.payrollList.push({ ...this.editForm });
       }
       const modal = bootstrap.Modal.getInstance(this.$refs.editModal);
