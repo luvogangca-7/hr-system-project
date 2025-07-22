@@ -1,12 +1,12 @@
 <template>
   <div class="login-wrapper">
     <div class="roles">
-      <button @click="adminRole">Admin</button>
-      <button @click="staffRole">Staff</button>
+      <button @click="$store.commit('adminRole')">Admin</button>
+      <button @click="$store.commit('staffRole')">Staff</button>
     </div>
     <div class="login-box">
-      <h2>{{isAdmin? 'Welcome Admin' : 'Welcome Staff'}}</h2>
-      <form @submit.prevent="isAdmin? loginAdmin() : loginStaff()">
+      <h2>{{$store.state.isAdmin? 'Welcome Admin' : 'Welcome Staff'}}</h2>
+      <form @submit.prevent="$store.state.isAdmin? loginAdmin() : loginStaff()">
         <div class="form-group">
           <label for="username">Username</label>
           <input class="input" id="username" v-model="username" type="text" required />
@@ -27,7 +27,6 @@ export default {
     return {
       username: "",
       password: "",
-      isAdmin: true
     };
   },
   methods: {
@@ -52,13 +51,8 @@ export default {
             // Otherwise, show error message
             this.error = 'invalid username or password'
         }
-    },
-    adminRole(){
-      this.isAdmin = true
-    },
-    staffRole(){
-      this.isAdmin = false
     }
+    
   },
 };
 </script>

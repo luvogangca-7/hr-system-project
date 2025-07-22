@@ -1,9 +1,9 @@
 <template>
     <div class="page-wrapper">
-    <h1>My Dashboard</h1>
-    <p>Welcome back Staff, these are the stats so far!</p>
+    <h1>My Payroll</h1>
+    <p>Welcome back Admin, these are the stats so far!</p>
     <div class="main-page">
-
+      
     </div>
   </div>
 </template>
