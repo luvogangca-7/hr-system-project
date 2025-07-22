@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import AttendanceComp from '../components/AttendanceComp.vue';
+import AttendanceComp from '@/components/AttendanceComp.vue';
 
 export default {
   name: "Attendance",

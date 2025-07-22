@@ -1,8 +1,12 @@
 <template>
   <div class="login-wrapper">
+    <div class="roles">
+      <button @click="adminRole">Admin</button>
+      <button @click="staffRole">Staff</button>
+    </div>
     <div class="login-box">
-      <h2>Welcome Back</h2>
-      <form @submit.prevent="login">
+      <h2>{{isAdmin? 'Welcome Admin' : 'Welcome Staff'}}</h2>
+      <form @submit.prevent="isAdmin? loginAdmin() : loginStaff()">
         <div class="form-group">
           <label for="username">Username</label>
           <input class="input" id="username" v-model="username" type="text" required />
@@ -23,20 +27,38 @@ export default {
     return {
       username: "",
       password: "",
+      isAdmin: true
     };
   },
   methods: {
-    login() {
+    loginAdmin() {
         // Simple authentication logic: checks hardcoded credentials
         if(this.username === "admin" && this.password === "1234") {
             this.error ='',
             // If credentials are correct, navigate to dashboard
-            this.$router.push('/dashboard')
+            this.$router.push('/admin/dashboard')
         }else{
             // Otherwise, show error message
             this.error = 'invalid username or password'
         }
     },
+    loginStaff(){
+
+      if(this.username === "user" && this.password === "1234") {
+            this.error ='',
+            // If credentials are correct, navigate to dashboard
+            this.$router.push('/staff/mydashboard')
+        }else{
+            // Otherwise, show error message
+            this.error = 'invalid username or password'
+        }
+    },
+    adminRole(){
+      this.isAdmin = true
+    },
+    staffRole(){
+      this.isAdmin = false
+    }
   },
 };
 </script>
@@ -57,11 +79,12 @@ export default {
 .login-wrapper {
   min-height: 100vh;
   width: 100vw;
-  background-image: url('../assets/mts-logo.jpg');
+  background-image: url('/src/views/pics/mts-logo.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0;
@@ -101,9 +124,12 @@ label {
   width: 100%;
   padding: 8px;
   border: none;
-  border-radius: 8px;
+  border-bottom: 1px solid #fff;
   outline: none;
+  background: transparent;
+  color:#fff;
 }
+
 .submit {
   width: 100%;
   padding: 10px;

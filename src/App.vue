@@ -62,7 +62,8 @@ export default {
   data() {
     return {
       sidebarOpen: false,
-      isMobile: false
+      isMobile: false,
+      isAdmin:true
     }
   },
   computed: {
